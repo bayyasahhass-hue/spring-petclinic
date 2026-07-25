@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'spc_node'
+        label 'spc'
     }
 
     triggers {
