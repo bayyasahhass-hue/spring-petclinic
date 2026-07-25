@@ -15,7 +15,7 @@ pipeline {
     parameters {
         choice(
             name: 'GOALS',
-            choices: ['mvnpackage', 'mvnclean', 'mvnvalidate', 'mvntest'],
+            choices: ['package', 'clean', 'validate', 'test'],
             description: 'Select Maven Goal'
         )
     }
