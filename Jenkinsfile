@@ -15,7 +15,7 @@ pipeline {
     parameters {
         choice(
             name: 'GOALS',
-            choices: ['mvn package', 'mvn clean', 'mvn validate', 'mvn test'],
+            choices: ['package', 'clean', 'validate', 'test'],
             description: 'Select Maven Goal'
         )
     }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 sh "mvn ${params.GOALS}"
             }
-        
+        }
 
     }
 }
