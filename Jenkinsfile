@@ -1,27 +1,46 @@
 pipeline {
-    agent any
-    parameters {
-         choice(name: 'CHOICES', choices: ['mvn package', 'mvn test', 'mvn validate'], description: 'this is options') 
-         }
-    triggers { 
-        pollSCM('* * * * *')
+    agent {
+        label 'spc_pipeline'
     }
+
+    triggers {
+        pollSCM('0 0 * * *')
+    }
+
+    tools {
+        jdk 'jdk-17'
+        maven 'mvn-3.9.12'
+    }
+
+    parameters {
+        choice(
+            name: 'GOALS',
+            choices: [
+                'clean',
+                'validate',
+                'test',
+                'package'
+            ],
+            description: 'Select Maven Goal'
+        )
+    }
+
     stages {
-        stage('clone') {
+
+        stage('Git Clone') {
             steps {
-                git url:'https://github.com/muthyalasaikiran/spring-petclinic.git',
-                    branch: 'main'
+                git branch: 'main',
+                    url: 'https://github.com/kasagonirithish/spring-petclinic.git'
             }
         }
-        stage('build') {
-            steps {  
-                echo "Choice: ${params.CHOICE}" 
-                sh 'touch hello'
-            
 
+        stage('Maven Build') {
+            steps {
+                sh "mvn ${params.GOALS}"
             }
-    }
-    
-    }
+        }
 
+        
+        }
+    }
 }
