@@ -15,7 +15,7 @@ pipeline {
     parameters {
         choice(
             name: 'GOALS',
-            choices: ['clean', 'validate', 'test', 'clean package'],
+            choices: ['mvn package', 'mvn clean', 'mvn validate', 'mvn test'],
             description: 'Select Maven Goal'
         )
     }
@@ -32,6 +32,11 @@ pipeline {
         stage('Build') {
             steps {
                 sh "mvn ${params.GOALS}"
+            }
+        }
+        stage('deploy') {
+            steps {
+                sh "java -jar /home/ubuntu/spc/workspace/pipeline_spc/target/spring-petclinic-3.0.0-SNAPSHOT.jar"
             }
         }
 
