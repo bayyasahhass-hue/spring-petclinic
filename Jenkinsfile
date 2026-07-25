@@ -16,12 +16,11 @@ pipeline {
         choice(
             name: 'GOALS',
             choices: [
-                'clean',
-                'validate',
-                'test',
-                'package'
-            ],
-            description: 'Select Maven Goal'
+                'mvn package',
+                'mvn clean',
+                'mvn validate',
+                'mvn test'
+            ]
         )
     }
 
@@ -34,13 +33,16 @@ pipeline {
             }
         }
 
-        stage('Maven Build') {
+        stage('Build') {
             steps {
-                sh "mvn ${params.GOALS}"
+                sh "${params.GOALS}"
             }
         }
 
-        
+        stage('Deploy') {
+            steps {
+                sh 'nohup java -jar target/spring-petclinic-2.7.3.jar > app.log 2>&1 &'
+            }
         }
     }
 }
