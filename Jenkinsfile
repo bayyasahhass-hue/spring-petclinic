@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'spc_pipeline'
+        label 'spc_node'
     }
 
     triggers {
@@ -15,12 +15,7 @@ pipeline {
     parameters {
         choice(
             name: 'GOALS',
-            choices: [
-                'mvn package',
-                'mvn clean',
-                'mvn validate',
-                'mvn test'
-            ]
+            choices: ['mvn package','mvn clean','mvn validate','mvn test']
         )
     }
 
@@ -41,7 +36,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'nohup java -jar target/spring-petclinic-2.7.3.jar > app.log 2>&1 &'
+                sh 'java -jar /home/ubuntu/remote/workspace/spc_new/target/spring-petclinic-2.7.3.jar'
             }
         }
     }
