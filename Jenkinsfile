@@ -36,7 +36,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh "java -jar /home/ubuntu/spc/workspace/pipeline_spc/target/spring-petclinic-3.0.0-SNAPSHOT.jar"
+                sh "java -jar /home/ubuntu/spc/workspace/pipeline_spc/target/*.jar"
             }
         }
 
