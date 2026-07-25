@@ -33,12 +33,7 @@ pipeline {
             steps {
                 sh "mvn ${params.GOALS}"
             }
-        }
-        stage('deploy') {
-            steps {
-                sh "java -jar /home/ubuntu/spc/workspace/pipeline_spc/target/*.jar"
-            }
-        }
+        
 
     }
 }
